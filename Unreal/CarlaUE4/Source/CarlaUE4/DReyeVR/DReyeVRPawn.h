@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+#include <string>
 #include "Camera/CameraComponent.h" // UCameraComponent
 #include "EgoVehicle.h"             // AEgoVehicle
 #include "Engine/Scene.h"           // FPostProcessSettings
@@ -22,25 +24,25 @@ class ADReyeVRPawn : public APawn
 {
     GENERATED_BODY()
 
-  public:
-    ADReyeVRPawn(const FObjectInitializer &ObjectInitializer);
+public:
+    ADReyeVRPawn(const FObjectInitializer& ObjectInitializer);
 
-    virtual void SetupPlayerInputComponent(UInputComponent *PlayerInputComponent) override;
+    virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
     virtual void Tick(float DeltaSeconds) override;
 
-    void BeginEgoVehicle(AEgoVehicle *Vehicle, UWorld *World, APlayerController *PlayerIn);
+    void BeginEgoVehicle(AEgoVehicle* Vehicle, UWorld* World, APlayerController* PlayerIn);
 
-    APlayerController *GetPlayer()
+    APlayerController* GetPlayer()
     {
         return Player;
     }
 
-    UCameraComponent *GetCamera()
+    UCameraComponent* GetCamera()
     {
         return FirstPersonCam;
     }
 
-    const UCameraComponent *GetCamera() const
+    const UCameraComponent* GetCamera() const
     {
         return FirstPersonCam;
     }
@@ -50,40 +52,45 @@ class ADReyeVRPawn : public APawn
         return bIsLogiConnected;
     }
 
-    void DrawSpectatorScreen(const FVector &GazeOrigin, const FVector &GazeDir);
-    void DrawFlatHUD(float DeltaSeconds, const FVector &GazeOrigin, const FVector &GazeDir);
+    void DrawSpectatorScreen(const FVector& GazeOrigin, const FVector& GazeDir);
+    void DrawFlatHUD(float DeltaSeconds, const FVector& GazeOrigin, const FVector& GazeDir);
 
-  protected:
+protected:
     virtual void BeginPlay() override;
     virtual void BeginDestroy() override;
     void ReadConfigVariables();
 
-    class UWorld *World = nullptr;
-    class AEgoVehicle *EgoVehicle = nullptr;
+    class UWorld* World = nullptr;
+    class AEgoVehicle* EgoVehicle = nullptr;
 
-  private:
+private:
     ////////////////:CAMERA:////////////////
     UPROPERTY(Category = Camera, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    class UCameraComponent *FirstPersonCam;
+        class UCameraComponent* FirstPersonCam;
     void ConstructCamera();
+    FPostProcessSettings CreatePostProcessingParams() const;
     float FieldOfView = 90.f; // in degrees
-    void NextShader();
-    void PrevShader();
-    size_t CurrentShaderIdx = 0; // 0th shader is rgb (camera)
+    float ScreenPercentage = 100.f;
+    float VignetteIntensity = 0.f;
+    float BloomIntensity = 0.f;
+    float SceneFringeIntensity = 0.f;
+    float LensFlareIntensity = 0.f;
+    float GrainIntensity = 0.f;
+    float MotionBlurIntensity = 0.f;
 
     ////////////////:STEAMVR:////////////////
     void InitSteamVR();         // Initialize the Head Mounted Display
     void InitSpectator();       // Initialize the VR spectator
     void TickSteamVR();         // Ensure SteamVR is active on every tick
     void InitReticleTexture();  // initializes the spectator-reticle texture
-    UTexture2D *ReticleTexture; // UE4 texture for eye reticle
+    UTexture2D* ReticleTexture; // UE4 texture for eye reticle
     float HUDScaleVR;           // How much to scale the HUD in VR
 
     ////////////////:FLATHUD:////////////////
     // (Flat) HUD (NOTE: ONLY FOR NON VR)
-    void InitFlatHUD(APlayerController *P);
+    void InitFlatHUD(APlayerController* P);
     UPROPERTY(Category = HUD, EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-    class ADReyeVRHUD *FlatHUD;
+        class ADReyeVRHUD* FlatHUD;
     FVector2D ReticlePos;                // 2D reticle position from eye gaze
     int ReticleSize = 100;               // diameter of reticle (line thickness is 10% of this)
     bool bDrawFlatHud = true;            // whether to draw the flat hud at all (default true, but false in VR)
@@ -109,9 +116,23 @@ class ADReyeVRPawn : public APawn
     // can use the keyboard to reposition/takeover without input conflict
     bool bOverrideInputsWithKbd = true; // keyboard > logi priority for inputs
 
-    void SetupEgoVehicleInputComponent(UInputComponent *PlayerInputComponent, AEgoVehicle *EV);
-    UInputComponent *InputComponent = nullptr;
-    APlayerController *Player = nullptr;
+    void SetupEgoVehicleInputComponent(UInputComponent* PlayerInputComponent, AEgoVehicle* EV);
+    UInputComponent* InputComponent = nullptr;
+    APlayerController* Player = nullptr;
+
+    ////////////////:DATA_LOGGING:////////////////
+    bool bRecordData = false;                                   // To know if data should be recorded/updated
+    bool bReactedToTOR = false;                                 // To know if the driver ha reacted to TOR or not
+    bool bRecordingOver = false;                                // To know if the recording time is over. Then write data to csv file.
+    bool bDataIsWritten = false;                                // We only want to write data once.
+    float FutureRecordingTimeStamp = 0.f;    // If current time >= this variable, then record data
+    const float RecordingTimeInterval = 0.2f;                   // in seconds
+    int32 ReadSignalFile();
+    std::vector<float> SteeringWheelAngles;
+    std::vector<float> SteeringWheelVelocity;
+    std::vector<float> BrakingInput;
+    float ReactionTime = 0.f;
+    void WriteData();
 
     ////////////////:LOGI:////////////////
     void InitLogiWheel();
@@ -120,11 +141,12 @@ class ADReyeVRPawn : public APawn
     bool bLogLogitechWheel = false;
     int WheelDeviceIdx = 0; // usually leaving as 0 is fine, only use 1 if 0 is taken
 #if USE_LOGITECH_PLUGIN
-    struct DIJOYSTATE2 *Old = nullptr; // global "old" struct for the last state
-    void LogLogitechPluginStruct(const struct DIJOYSTATE2 *Now);
+    struct DIJOYSTATE2* Old = nullptr; // global "old" struct for the last state
+    void LogLogitechPluginStruct(const struct DIJOYSTATE2* Now);
     void LogitechWheelUpdate();      // for logitech wheel integration
     void ApplyForceFeedback() const; // for logitech wheel integration
-    float WheelRotationLast, AccelerationPedalLast, BrakePedalLast;
+    float WheelRotationLast = 0.f, AccelerationPedalLast = 0.f, BrakePedalLast = 0.f;
+    float WheelRotationDegreeLast;
 #endif
     bool bIsLogiConnected = false; // check if Logi device is connected (on BeginPlay)
     bool bIsHMDConnected = false;  // checks for HMD connection on BeginPlay

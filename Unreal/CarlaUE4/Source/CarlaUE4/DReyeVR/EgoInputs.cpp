@@ -11,95 +11,40 @@ const DReyeVR::UserInputs &AEgoVehicle::GetVehicleInputs() const
     return VehicleInputs;
 }
 
-const FTransform &AEgoVehicle::GetCameraRootPose() const
-{
-    return CameraPoseOffset;
-}
-
 void AEgoVehicle::CameraFwd()
 {
-    // move by (1, 0, 0)
-    CameraPositionAdjust(FVector::ForwardVector);
+    CameraPositionAdjust(FVector(1.f, 0.f, 0.f));
 }
 
 void AEgoVehicle::CameraBack()
 {
-    // move by (-1, 0, 0)
-    CameraPositionAdjust(FVector::BackwardVector);
+    CameraPositionAdjust(FVector(-1.f, 0.f, 0.f));
 }
 
 void AEgoVehicle::CameraLeft()
 {
-    // move by (0, -1, 0)
-    CameraPositionAdjust(FVector::LeftVector);
+    CameraPositionAdjust(FVector(0.f, -1.f, 0.f));
 }
 
 void AEgoVehicle::CameraRight()
 {
-    // move by (0, 1, 0)
-    CameraPositionAdjust(FVector::RightVector);
+    CameraPositionAdjust(FVector(0.f, 1.f, 0.f));
 }
 
 void AEgoVehicle::CameraUp()
 {
-    // move by (0, 0, 1)
-    CameraPositionAdjust(FVector::UpVector);
+    CameraPositionAdjust(FVector(0.f, 0.f, 1.f));
 }
 
 void AEgoVehicle::CameraDown()
 {
-    // move by (0, 0, -1)
-    CameraPositionAdjust(FVector::DownVector);
+    CameraPositionAdjust(FVector(0.f, 0.f, -1.f));
 }
 
-void AEgoVehicle::CameraPositionAdjust(const FVector &Disp)
+void AEgoVehicle::CameraPositionAdjust(const FVector &displacement)
 {
-    // preserves adjustment even after changing view
-    CameraPoseOffset.SetLocation(CameraPoseOffset.GetLocation() + Disp);
-    VRCameraRoot->SetRelativeLocation(CameraPose.GetLocation() + CameraPoseOffset.GetLocation());
-    /// TODO: account for rotation? scale?
-}
-
-void AEgoVehicle::PressNextCameraView()
-{
-    if (!bCanPressNextCameraView)
-        return;
-    bCanPressNextCameraView = false;
-    NextCameraView();
-};
-void AEgoVehicle::ReleaseNextCameraView()
-{
-    bCanPressNextCameraView = true;
-};
-
-void AEgoVehicle::PressPrevCameraView()
-{
-    if (!bCanPressPrevCameraView)
-        return;
-    bCanPressPrevCameraView = false;
-    PrevCameraView();
-};
-void AEgoVehicle::ReleasePrevCameraView()
-{
-    bCanPressPrevCameraView = true;
-};
-
-void AEgoVehicle::NextCameraView()
-{
-    CurrentCameraTransformIdx = (CurrentCameraTransformIdx + 1) % (CameraTransforms.size());
-    UE_LOG(LogTemp, Log, TEXT("Switching to next camera view: \"%s\""),
-           *CameraTransforms[CurrentCameraTransformIdx].first);
-    SetCameraRootPose(CurrentCameraTransformIdx);
-}
-
-void AEgoVehicle::PrevCameraView()
-{
-    if (CurrentCameraTransformIdx == 0)
-        CurrentCameraTransformIdx = CameraTransforms.size();
-    CurrentCameraTransformIdx--;
-    UE_LOG(LogTemp, Log, TEXT("Switching to prev camera view: \"%s\""),
-           *CameraTransforms[CurrentCameraTransformIdx].first);
-    SetCameraRootPose(CurrentCameraTransformIdx);
+    const FVector &CurrentRelLocation = VRCameraRoot->GetRelativeLocation();
+    VRCameraRoot->SetRelativeLocation(CurrentRelLocation + displacement);
 }
 
 void AEgoVehicle::SetSteering(const float SteeringInput)

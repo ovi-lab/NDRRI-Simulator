@@ -1,0 +1,9 @@
+PARTICIPANT_ID: T02
+TRIAL_NO: 1
+IGNORE: 1
+----------------------
+RSVP: 0
+WPM: 200
+TTS: 1
+----------------------
+TEXTFILE: Text3
