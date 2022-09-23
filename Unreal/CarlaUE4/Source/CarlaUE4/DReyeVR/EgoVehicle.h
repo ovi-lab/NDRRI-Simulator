@@ -29,6 +29,7 @@ class CARLAUE4_API AEgoVehicle : public ACarlaWheeledVehicle
 {
 	GENERATED_BODY()
 
+
 		friend class ADReyeVRPawn;
 
 public:

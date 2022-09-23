@@ -451,7 +451,7 @@ void AEgoVehicle::ConstructEgoSounds()
 	TurnSignalSound->SetSound(TurnSignalSoundWave.Object);
 
 	static ConstructorHelpers::FObjectFinder<USoundWave> TORAlertSoundWave(
-		TEXT("SoundWave'/Game/Carla/Blueprints/Vehicles/DReyeVR/Sounds/TORAlert.TORAlert'"));
+		TEXT("SoundWave'/Game/Carla/Blueprints/Vehicles/DReyeVR/Sounds/AlertSound.AlertSound'"));
 	TORAlertSound = CreateDefaultSubobject<UAudioComponent>(TEXT("TORAlert"));
 	TORAlertSound->SetupAttachment(GetRootComponent());
 	TORAlertSound->bAutoActivate = false;
@@ -856,12 +856,12 @@ void AEgoVehicle::ConstructInterface() {
 
 	// Settings conditional to Text presentation technique.
 	if (bRSVP) {
-		HUD->SetRelativeLocation(DashboardLocnInVehicle + FVector(5, -45.f, 50.f));
+		HUD->SetRelativeLocation(DashboardLocnInVehicle + FVector(5, -45.f, 40.f));
 		FString PathToMesh = TEXT("StaticMesh'/Game/DReyeVROFR/StaticMeshes/RSVP_HUD_v1.RSVP_HUD_v1'");
 		const ConstructorHelpers::FObjectFinder<UStaticMesh> MeshObj(*PathToMesh);
 		HUD->SetStaticMesh(MeshObj.Object);
 
-		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 46.f));
+		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 36.5f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
 		TextDisplay->SetWorldSize(7); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
@@ -869,12 +869,12 @@ void AEgoVehicle::ConstructInterface() {
 	}
 	else {
 		UE_LOG(LogTemp, Log, TEXT("DEBUG: Choosing STP"));
-		HUD->SetRelativeLocation(DashboardLocnInVehicle + FVector(5, -45.f, 50.f));
+		HUD->SetRelativeLocation(DashboardLocnInVehicle + FVector(5, -45.f, 37.f));
 		FString PathToMesh = TEXT("StaticMesh'/Game/DReyeVROFR/StaticMeshes/STP_HUD_v1.STP_HUD_v1'");
 		const ConstructorHelpers::FObjectFinder<UStaticMesh> MeshObj(*PathToMesh);
 		HUD->SetStaticMesh(MeshObj.Object);
 
-		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -66.5f, 59.f));
+		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -66.5f, 46.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
 		TextDisplay->SetWorldSize(4); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextTop);
@@ -954,7 +954,7 @@ void AEgoVehicle::DisplayHUDAlert(FString DisplayText, FColor TextColor) {
 	HUD->SetVisibility(false, false);
 
 	// Displaying the TOR alert message
-	TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 46.f));
+	TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 37.f));
 	TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
 	TextDisplay->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
 	TextDisplay->SetWorldSize(9); // scale the font with this
