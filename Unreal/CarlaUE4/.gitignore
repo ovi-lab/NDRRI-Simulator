@@ -19,9 +19,6 @@ Plugins/Carla/DerivedDataCache
 Plugins/Carla/Intermediate
 Plugins/Carla/Saved
 
-!Content/ConfigFiles
-!Content/DataFiles
-!Content/DReyeVROFR
 Config/CarlaSettings.ini
 Config/DefaultEditor.ini
 Config/CarSimConfig.ini
