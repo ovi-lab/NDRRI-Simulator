@@ -28,9 +28,8 @@ Unreal/CarlaUE4/Config/OptionalModules.ini
 /Import/*
 !/Import/README.md
 
-PythonAPI
-!PythonAPI/examples
-!PythonAPI/experiment
+PythonAPI/carla
+PythonAPI/docs
 
 *.VC.db
 *.VC.opendb

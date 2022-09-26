@@ -1,0 +1,25 @@
+Pre-study questionnaire
+Trial No:1, Audio assistance:NAA, Text Presentation Technique:RSVP, TOR Scenario:ACR, Text File:TextFile8.txt
+Comprehension Test
+Trial No:2, Audio assistance:NAA, Text Presentation Technique:RSVP, TOR Scenario:LVAD, Text File:TextFile3.txt
+Comprehension Test
+NASA-TLX
+UEQ
+Trial No:3, Audio assistance:NAA, Text Presentation Technique:STP, TOR Scenario:EW, Text File:TextFile2.txt
+Comprehension Test
+Trial No:4, Audio assistance:NAA, Text Presentation Technique:STP, TOR Scenario:CSA, Text File:TextFile4.txt
+Comprehension Test
+NASA-TLX
+UEQ
+Trial No:5, Audio assistance:AA, Text Presentation Technique:STP, TOR Scenario:ACR, Text File:TextFile6.txt
+Comprehension Test
+Trial No:6, Audio assistance:AA, Text Presentation Technique:STP, TOR Scenario:EW, Text File:TextFile5.txt
+Comprehension Test
+NASA-TLX
+UEQ
+Trial No:7, Audio assistance:AA, Text Presentation Technique:RSVP, TOR Scenario:CSA, Text File:TextFile7.txt
+Comprehension Test
+Trial No:8, Audio assistance:AA, Text Presentation Technique:RSVP, TOR Scenario:LVAD, Text File:TextFile1.txt
+Comprehension Test
+NASA-TLX
+UEQ
