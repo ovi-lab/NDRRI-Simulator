@@ -530,7 +530,7 @@ void AEgoVehicle::ConstructDashText() // dashboard text (speedometer, turn signa
 	GearShifter->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
 	GearShifter->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
 
-	//  Constructing User-InterfaceParseInto
+	//  Constructing User-Interface
 	ConstructInterface();
 }
 
@@ -861,7 +861,7 @@ void AEgoVehicle::ConstructInterface() {
 		const ConstructorHelpers::FObjectFinder<UStaticMesh> MeshObj(*PathToMesh);
 		HUD->SetStaticMesh(MeshObj.Object);
 
-		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 36.5f));
+		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 37.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
 		TextDisplay->SetWorldSize(7); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
@@ -888,14 +888,14 @@ void AEgoVehicle::RestoreNDRTStyling() {
 
 	// Settings conditional to Text presentation technique.
 	if (bRSVP) {
-		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 46.f));
+		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 37.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
 		TextDisplay->SetWorldSize(7); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
 		TextDisplay->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
 	}
 	else {
-		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -66.5f, 59.f));
+		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -66.5f, 46.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
 		TextDisplay->SetWorldSize(4); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextTop);
@@ -957,7 +957,7 @@ void AEgoVehicle::DisplayHUDAlert(FString DisplayText, FColor TextColor) {
 	TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 37.f));
 	TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
 	TextDisplay->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
-	TextDisplay->SetWorldSize(9); // scale the font with this
+	TextDisplay->SetWorldSize(8); // scale the font with this
 	TextDisplay->SetTextRenderColor(TextColor);
 	TextDisplay->SetText(DisplayText);
 }
