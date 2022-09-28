@@ -217,7 +217,7 @@ def run(CONTENT_FOLDER_PATH):
             world.tick()
 
         # Write the TOR performance data to the CSV files
-        utils.write_performance_data(DATA_FOLDER_PATH, configurations, lane_offset_data, collision_data)
+        utils.write_performance_data(DATA_FOLDER_PATH, configurations, lane_offset_data, collision_data, "ACR")
 
         # Turn on autopilot again once TOR is fulfilled.
         DReyeVR_vehicle.set_autopilot(True, 8000)

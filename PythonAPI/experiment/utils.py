@@ -20,13 +20,17 @@ def collision_performance(carla, world, DReyeVR_vehicle, collision_data):
     collision_sensor.listen(lambda event: collision_handler(event, collision_data))
     
 def collision_handler(event, list):
-    list.append([event.time_stamp, event.other_actor])
+    list.append([str(event.time_stamp), str(event.other_actor)])
 
-def write_performance_data(DATA_FILE_PATH, configurations, lp_data, collision_data):
+def write_performance_data(DATA_FILE_PATH, configurations, lp_data, collision_data, scenario):
     if configurations["IGNORE"] == "0":
         first_rows = [configurations["PARTICIPANT_ID"], configurations["RSVP"], configurations["TTS"], configurations["TRIAL_NO"]]
         append_csv_row(DATA_FILE_PATH + "/LanePositionDifference.csv", first_rows + lp_data)
-        append_csv_row(DATA_FILE_PATH + "/CollisionData.csv", first_rows + collision_data)
+        if len(collision_data) == 0:
+            append_csv_row(DATA_FILE_PATH + "/CollisionData.csv", first_rows + "No Collision")
+        else:
+            append_csv_row(DATA_FILE_PATH + "/CollisionData.csv", first_rows + collision_data)
+        append_csv_row(DATA_FILE_PATH + "/Scenario.csv", first_rows + [scenario])
         print(first_rows + collision_data)
 
 def append_csv_row(FILE_PATH, list):

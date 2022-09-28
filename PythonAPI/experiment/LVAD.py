@@ -170,7 +170,7 @@ def run(CONTENT_FOLDER_PATH):
             world.tick()
 
         # Write the TOR performance data to the CSV files
-        utils.write_performance_data(DATA_FOLDER_PATH, configurations, lane_offset_data, collision_data)
+        utils.write_performance_data(DATA_FOLDER_PATH, configurations, lane_offset_data, collision_data, "LVAD")
 
         # Revert back original conditions i.e., danger_vehicle = safe_vehicle
         danger_vehicle.disable_constant_velocity()

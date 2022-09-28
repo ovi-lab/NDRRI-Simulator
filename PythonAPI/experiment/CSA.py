@@ -208,7 +208,7 @@ def run(CONTENT_FOLDER_PATH):
         print("Ego vehicle passed the barrier.")
 
         # Write the handover performance to the CSV files.
-        utils.write_performance_data(DATA_FOLDER_PATH, configurations,lane_offset_data, collision_data)
+        utils.write_performance_data(DATA_FOLDER_PATH, configurations,lane_offset_data, collision_data, "CSA")
 
         # When the barrier passes the ego-vehicle, turn on the autopilot mode and send signal "2"
         DReyeVR_vehicle.set_autopilot(True, 8000)
