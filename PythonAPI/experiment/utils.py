@@ -27,7 +27,7 @@ def write_performance_data(DATA_FILE_PATH, configurations, lp_data, collision_da
         first_rows = [configurations["PARTICIPANT_ID"], configurations["RSVP"], configurations["TTS"], configurations["TRIAL_NO"]]
         append_csv_row(DATA_FILE_PATH + "/LanePositionDifference.csv", first_rows + lp_data)
         if len(collision_data) == 0:
-            append_csv_row(DATA_FILE_PATH + "/CollisionData.csv", first_rows + "No Collision")
+            append_csv_row(DATA_FILE_PATH + "/CollisionData.csv", first_rows + ["No Collision"])
         else:
             append_csv_row(DATA_FILE_PATH + "/CollisionData.csv", first_rows + collision_data)
         append_csv_row(DATA_FILE_PATH + "/Scenario.csv", first_rows + [scenario])
@@ -38,7 +38,7 @@ def append_csv_row(FILE_PATH, list):
     row = "\n"
     for i in range(0, len(list) - 1):
         row += "{}, ".format(list[i])
-    row += "{}".format(list[i])
+    row += "{}".format(list[i+1])
     file.write(row)
     file.close()
 
@@ -65,26 +65,41 @@ def read_config_file(CONFIG_FILE_PATH):
     return {"PARTICIPANT_ID": PARTICIPANT_ID, "TRIAL_NO": TRIAL_NO, "IGNORE": IGNORE, "RSVP": RSVP, "WPM": WPM, "TTS": TTS, "TEXTFILE": TEXTFILE}
 
 def write_signal_file(file_path, signal):
+    for i in range(0, 10):
+        bool = write_signal_helper(file_path, signal)
+        if bool:
+            break
+
+def write_signal_helper(file_path, signal):
     try:
-        f = open(file_path, "w")
+        f = open(file_path, "w", encoding="utf8")
         f.write(str(signal))
         f.close()
+        return True
     except:
         print("Error occured while opening/writing to the signal file")
-
+    return False
 
 def read_signal_file(file_path):
+    for i in range(0, 10):
+        signal, bool = read_signal_helper(file_path)
+        if bool:
+            return signal
+    return None
+
+def read_signal_helper(file_path):
     try:
-        f = open(file_path, "r")
+        f = open(file_path, "r", encoding="utf8")
         signal = int(f.read())
         f.close()
-        return signal
+        return (signal, True)
     except:
-        print("Error occured while opening/reading the signal file")
+        print("Error occured while opening/writing to the signal file")
+    return (None, False)
 
 def extract_text(TEXT_FILE_PATH):
     try:
-        f = open(TEXT_FILE_PATH, "r")
+        f = open(TEXT_FILE_PATH, "r", encoding="utf8")
         string = f.read()
         f.close()
         return string

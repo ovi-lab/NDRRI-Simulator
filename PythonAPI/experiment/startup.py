@@ -27,8 +27,8 @@ import CSA
 import ACR
 
 ################################ CHANGE UPON PACKAGING ################################
-# CONTENT_FOLDER_PATH = "D:/carla/Build/UE4Carla/fdc612a/WindowsNoEditor/CarlaUE4/Content"
-CONTENT_FOLDER_PATH = "D:/carla/Unreal/CarlaUE4/Content"
+CONTENT_FOLDER_PATH = "D:/carla/Build/UE4Carla/8f9a527-dirty/WindowsNoEditor/CarlaUE4/Content"
+# CONTENT_FOLDER_PATH = "D:/carla/Unreal/CarlaUE4/Content"
 #######################################################################################
 
 def main(arg):
@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
     try:
         if len(sys.argv) == 1:
-            main(1) # Run extreme weather scenario by default
+            main(4) # Run extreme weather scenario by default
         else:
             main(int(sys.argv[1]))
     except KeyboardInterrupt:

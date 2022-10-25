@@ -738,7 +738,7 @@ void AEgoVehicle::STPTTS()
 		TTSStreamWord.ParseIntoArray(StreamWords, TEXT(" "), true);
 
 		const FLinearColor MsgColour = FLinearColor(0, 1, 1, 1); // YELLOW
-		UKismetSystemLibrary::PrintString(World, FString::Printf(TEXT("\"%s\" ||| %s"), *TTSStreamWord, *CurrentLines[0]), true, false, MsgColour, 1.f);
+		//UKismetSystemLibrary::PrintString(World, FString::Printf(TEXT("\"%s\" ||| %s"), *TTSStreamWord, *CurrentLines[0]), true, false, MsgColour, 1.f);
 
 		// Checking if scrolling is required or not
 		// Do not scroll if:

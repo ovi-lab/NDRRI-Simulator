@@ -444,7 +444,7 @@ void ADReyeVRPawn::InitLogiWheel()
 		const bool PrintToScreen = true;
 		const float ScreenDurationSec = 20.f;
 		const FLinearColor MsgColour = FLinearColor(1, 0, 0, 1); // RED
-		UKismetSystemLibrary::PrintString(World, LogiError, PrintToScreen, PrintToLog, MsgColour, ScreenDurationSec);
+		//UKismetSystemLibrary::PrintString(World, LogiError, PrintToScreen, PrintToLog, MsgColour, ScreenDurationSec);
 		if (PrintToLog)
 			UE_LOG(LogTemp, Warning, TEXT("%s"), *LogiError); // Error is RED
 	}
@@ -615,6 +615,13 @@ void ADReyeVRPawn::LogitechWheelUpdate()
 		{
 			bPedalsDefaulting = false;
 		}
+		// EDITED Debug the wheel rotation
+		const FString DebugString = FString::Printf(TEXT("Wheel rotation: %f; autopilot ON %s"), WheelRotation, (EgoVehicle->GetAutopilotStatus() ? TEXT("true") : TEXT("false")));
+		const bool PrintToLog = false; // kinda annoying when flooding the logs with warning messages
+		const bool PrintToScreen = true;
+		const float ScreenDurationSec = 5.f;
+		const FLinearColor MsgColour = FLinearColor(1, 0, 0, 1); // RED
+		UKismetSystemLibrary::PrintString(World, DebugString, PrintToScreen, PrintToLog, MsgColour, ScreenDurationSec);
 	}
 	else
 	{
@@ -627,9 +634,24 @@ void ADReyeVRPawn::LogitechWheelUpdate()
 		{
 			// Study Implementation modification: ignore Logitech inputs when autopilot is on
 			// let the autopilot drive if the user is not putting significant inputs
+			// EDITED Debug the wheel rotation
+			const FString DebugString = FString::Printf(TEXT("Wheel rotation: %f; autopilot ON %s"), WheelRotation, (EgoVehicle->GetAutopilotStatus() ? TEXT("true") : TEXT("false")));
+			const bool PrintToLog = false; // kinda annoying when flooding the logs with warning messages
+			const bool PrintToScreen = true;
+			const float ScreenDurationSec = 5.f;
+			const FLinearColor MsgColour = FLinearColor(1, 0, 0, 1); // RED
+			UKismetSystemLibrary::PrintString(World, DebugString, PrintToScreen, PrintToLog, MsgColour, ScreenDurationSec);
 		}
 		else
 		{
+			// EDITED Debug the wheel rotation
+			const FString DebugString = FString::Printf(TEXT("Wheel rotation: %f; autopilot OFF %s"), WheelRotation, (EgoVehicle->GetAutopilotStatus() ? TEXT("true") : TEXT("false")));
+			const bool PrintToLog = false; // kinda annoying when flooding the logs with warning messages
+			const bool PrintToScreen = true;
+			const float ScreenDurationSec = 5.f;
+			const FLinearColor MsgColour = FLinearColor(1, 0, 0, 1); // RED
+			UKismetSystemLibrary::PrintString(World, DebugString, PrintToScreen, PrintToLog, MsgColour, ScreenDurationSec);
+
 			// take over the vehicle control completely
 			EgoVehicle->SetSteering(WheelRotation);
 			EgoVehicle->SetThrottle(AccelerationPedal);
