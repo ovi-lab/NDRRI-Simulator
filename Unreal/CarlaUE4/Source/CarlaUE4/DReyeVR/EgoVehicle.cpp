@@ -629,19 +629,13 @@ void AEgoVehicle::UpdateDash()
 		RestoreNDRTStyling();
 
 		// Updating text in the Heads-Up Display
-		if (bTTS) {
-			if (bRSVP)
-				RSVPTTS();
-			else
-				STPTTS();
+		if (bRSVP) {
+			RSVPTTS();
 		}
-		else
-		{
-			if (bRSVP)
-				RSVP();
-			else
-				STP();
+		else {
+			STPTTS();
 		}
+		// There are also other methods such as the RSVP() and STP() which dont require the words from the TTS stream.
 	}
 	// If NDRT is paused case
 	if (bIsNDRTPaused) {

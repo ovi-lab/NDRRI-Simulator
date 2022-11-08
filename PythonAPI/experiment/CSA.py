@@ -63,6 +63,7 @@ def run(CONTENT_FOLDER_PATH):
     DATA_FOLDER_PATH = "{}{}".format(CONTENT_FOLDER_PATH, "/DataFiles")
     CONFIG_FILE_PATH = "{}{}".format(CONTENT_FOLDER_PATH, "/ConfigFiles/config.txt")
     RSVP_STREAM_FILE = "{}{}".format(CONTENT_FOLDER_PATH, "/ConfigFiles/TTSStreamFile.txt")
+    SENTENCE_INDEX_FILE = "{}{}".format(CONTENT_FOLDER_PATH, "/ConfigFiles/SentenceIndexFile.txt")
 
     configurations = utils.read_config_file(CONFIG_FILE_PATH)
     print("Extracted settings: " + str(configurations))
@@ -112,9 +113,9 @@ def run(CONTENT_FOLDER_PATH):
         # Once the reading task starts, run the TTS process if TTS is enabled.
         try:
             string = utils.extract_text(CONTENT_FOLDER_PATH + "/ConfigFiles/" + configurations["TEXTFILE"] + ".txt")
-            if int(configurations["TTS"]) == 1:
-                process = multiprocessing.Process(target=TTS.speak, args=(RSVP_STREAM_FILE, string, int(configurations["WPM"]), 0, 1.0))
-                process.start()
+            volume = 1.0 if int(configurations["TTS"]) == 1 else 0
+            process = multiprocessing.Process(target=TTS.speak, args=(RSVP_STREAM_FILE, SENTENCE_INDEX_FILE, string, int(configurations["WPM"]), 25, volume))
+            process.start()
         except Exception as e:
             print("Unable to start TTS process:", str(e))
                 
@@ -171,8 +172,11 @@ def run(CONTENT_FOLDER_PATH):
 
         # Pause the TTS process if it was executed
         try:
-            if int(configurations["TTS"]) == 1:
-                process_ps = psutil.Process(process.pid)
+            process_ps = psutil.Process(process.pid)
+            if int(configurations["RSVP"]) == 1:
+                process_ps.terminate()
+                utils.reset_stream_file(RSVP_STREAM_FILE)
+            else:
                 process_ps.suspend()
         except:
             print("Unable to pause process")
@@ -217,7 +221,13 @@ def run(CONTENT_FOLDER_PATH):
 
         # Resume the TTS process if it was executed
         try:
-            if int(configurations["TTS"]) == 1:
+            if int(configurations["RSVP"]) == 1:
+                file = open(SENTENCE_INDEX_FILE, "r")
+                sentence_index = int(file.read())
+                new_string = string[sentence_index:]
+                process = multiprocessing.Process(target=TTS.speak, args=(RSVP_STREAM_FILE, SENTENCE_INDEX_FILE, new_string, int(configurations["WPM"]), 25, volume))
+                process.start()
+            else:
                 process_ps.resume()
         except:
             print("Unable to resume the process")

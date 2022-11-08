@@ -64,6 +64,14 @@ def read_config_file(CONFIG_FILE_PATH):
 
     return {"PARTICIPANT_ID": PARTICIPANT_ID, "TRIAL_NO": TRIAL_NO, "IGNORE": IGNORE, "RSVP": RSVP, "WPM": WPM, "TTS": TTS, "TEXTFILE": TEXTFILE}
 
+def reset_stream_file(file_path):
+    try:
+        f = open(file_path, "w", encoding="utf8")
+        f.write("")
+        f.close()
+    except:
+        print("Error occured while opening/writing to the signal file")   
+
 def write_signal_file(file_path, signal):
     for i in range(0, 10):
         bool = write_signal_helper(file_path, signal)
