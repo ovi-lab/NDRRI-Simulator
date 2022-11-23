@@ -635,7 +635,7 @@ void AEgoVehicle::UpdateDash()
 		else {
 			STPTTS();
 		}
-		// There are also other methods such as the RSVP() and STP() which dont require the words from the TTS stream.
+		// There are also other methods such as the RSVP() and STP() which dont require the words from the TTS stream. The what fixed time budget for every word/line.
 	}
 	// If NDRT is paused case
 	if (bIsNDRTPaused) {
@@ -857,7 +857,7 @@ void AEgoVehicle::ConstructInterface() {
 
 		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 37.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
-		TextDisplay->SetWorldSize(7); // scale the font with this
+		TextDisplay->SetWorldSize(4); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
 		TextDisplay->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
 	}
@@ -884,7 +884,7 @@ void AEgoVehicle::RestoreNDRTStyling() {
 	if (bRSVP) {
 		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 37.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
-		TextDisplay->SetWorldSize(7); // scale the font with this
+		TextDisplay->SetWorldSize(4); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
 		TextDisplay->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
 	}

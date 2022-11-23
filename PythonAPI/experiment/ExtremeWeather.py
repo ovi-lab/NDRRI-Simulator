@@ -157,7 +157,7 @@ def run(CONTENT_FOLDER_PATH):
         try:
             string = utils.extract_text(CONTENT_FOLDER_PATH + "/ConfigFiles/" + configurations["TEXTFILE"] + ".txt")
             volume = 1.0 if int(configurations["TTS"]) == 1 else 0
-            process = multiprocessing.Process(target=TTS.speak, args=(RSVP_STREAM_FILE, SENTENCE_INDEX_FILE, string, int(configurations["WPM"]), 25, volume))
+            process = multiprocessing.Process(target=TTS.speak, args=(RSVP_STREAM_FILE, SENTENCE_INDEX_FILE, string, int(configurations["WPM"]), 0, volume))
             process.start()
         except Exception as e:
             print("Unable to start TTS process:", str(e))
@@ -222,7 +222,7 @@ def run(CONTENT_FOLDER_PATH):
                 file = open(SENTENCE_INDEX_FILE, "r")
                 sentence_index = int(file.read())
                 new_string = string[sentence_index:]
-                process = multiprocessing.Process(target=TTS.speak, args=(RSVP_STREAM_FILE, SENTENCE_INDEX_FILE, new_string, int(configurations["WPM"]), 25, volume))
+                process = multiprocessing.Process(target=TTS.speak, args=(RSVP_STREAM_FILE, SENTENCE_INDEX_FILE, new_string, int(configurations["WPM"]), 0, volume))
                 process.start()
             else:
                 process_ps.resume()
