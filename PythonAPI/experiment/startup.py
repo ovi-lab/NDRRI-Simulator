@@ -27,8 +27,8 @@ import CSA
 import ACR
 
 ################################ CHANGE UPON PACKAGING ################################
-CONTENT_FOLDER_PATH = "D:/carla/Build/UE4Carla/39fda45-dirty/WindowsNoEditor/CarlaUE4/Content"
-# CONTENT_FOLDER_PATH = "D:/carla/Unreal/CarlaUE4/Content"
+# CONTENT_FOLDER_PATH = "D:/carla/Build/UE4Carla/39fda45-dirty/WindowsNoEditor/CarlaUE4/Content"
+CONTENT_FOLDER_PATH = "D:/carla/Unreal/CarlaUE4/Content"
 #######################################################################################
 
 def main(arg):

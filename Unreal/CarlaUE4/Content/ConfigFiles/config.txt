@@ -1,9 +1,10 @@
+/* False: 0, True: 1*/
 PARTICIPANT_ID: T10
 TRIAL_NO: 2
-IGNORE: 0
+IGNORE: 1
 ----------------------
-RSVP: 0
+RSVP: 1
 WPM: 180
-TTS: 1
+TTS: 0
 ----------------------
 TEXTFILE: Text7

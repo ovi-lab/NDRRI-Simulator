@@ -217,6 +217,7 @@ private:
 	FString PathToTextFile = FPaths::ProjectContentDir() / TEXT("ConfigFiles/Text1.txt");
 	class UTextRenderComponent* TextDisplay;
 	class UStaticMeshComponent* HUD;
+	class UStaticMeshComponent* HUD_extra;
 	void ConstructInterface();
 	void EnableTextToSpeech();
 	FString TextFileName;                       // Name of the text file to read (have to append .txt)

@@ -717,7 +717,7 @@ void AEgoVehicle::STPTTS()
 	{
 		for (int32 i = 0; i < 2; i++)
 			CurrentLines.Emplace(FString(TEXT(" \n")));
-		for (int32 i = 0; i < 4; i++)
+		for (int32 i = 0; i < 3; i++)
 			CurrentLines.Emplace(GenerateSentence());
 		SetTextSTP();
 		bIsFirst = false;
@@ -857,20 +857,22 @@ void AEgoVehicle::ConstructInterface() {
 
 		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 37.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
-		TextDisplay->SetWorldSize(4); // scale the font with this
+		TextDisplay->SetWorldSize(5); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
 		TextDisplay->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
 	}
 	else {
 		UE_LOG(LogTemp, Log, TEXT("DEBUG: Choosing STP"));
-		HUD->SetRelativeLocation(DashboardLocnInVehicle + FVector(5, -45.f, 37.f));
+
+		HUD->SetRelativeLocation(DashboardLocnInVehicle + FVector(5, -41.f, 36.5f)); // 5, -45.f, 37.f
+		HUD->SetRelativeScale3D(FVector(1.f, 1.15f, 1.f));
 		FString PathToMesh = TEXT("StaticMesh'/Game/DReyeVROFR/StaticMeshes/STP_HUD_v1.STP_HUD_v1'");
 		const ConstructorHelpers::FObjectFinder<UStaticMesh> MeshObj(*PathToMesh);
 		HUD->SetStaticMesh(MeshObj.Object);
 
 		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -66.5f, 46.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
-		TextDisplay->SetWorldSize(4); // scale the font with this
+		TextDisplay->SetWorldSize(5); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextTop);
 		TextDisplay->SetHorizontalAlignment(EHorizTextAligment::EHTA_Left);
 	}
@@ -884,14 +886,14 @@ void AEgoVehicle::RestoreNDRTStyling() {
 	if (bRSVP) {
 		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -45, 37.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
-		TextDisplay->SetWorldSize(4); // scale the font with this
+		TextDisplay->SetWorldSize(5); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextCenter);
 		TextDisplay->SetHorizontalAlignment(EHorizTextAligment::EHTA_Center);
 	}
 	else {
 		TextDisplay->SetRelativeLocation(DashboardLocnInVehicle + FVector(-7, -66.5f, 46.f));
 		TextDisplay->SetRelativeRotation(FRotator(-32.f, 180.f, 0.f)); // need to flip it to get the text in driver POV
-		TextDisplay->SetWorldSize(4); // scale the font with this
+		TextDisplay->SetWorldSize(5); // scale the font with this
 		TextDisplay->SetVerticalAlignment(EVerticalTextAligment::EVRTA_TextTop);
 		TextDisplay->SetHorizontalAlignment(EHorizTextAligment::EHTA_Left);
 	}
